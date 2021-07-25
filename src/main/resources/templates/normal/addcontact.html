@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/userbase::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+</head>
+<body>
+	<section>
+		
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<span style="font-size: 20px;"><i class="fas fa-bars" onclick="toggleSidebar()"></i></span>
+					<div class="card">
+						<div class="card-header text-center">
+							<h1>Add Contact</h1>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-8 offset-md-2">
+									<!-- <div class="card"> -->
+										<div class="card-body">
+											<div th:if="${session.message}" th:classappend="${session.message.msgType}"
+												class="alert alert-dismissible fade show" role="alert">
+												<p th:text="${session.message.msgContent}"></p>
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+											</div>
+											<form action="" method="post" enctype="multipart/form-data" th:action="@{/user/processcontact}" th:object="${contact}">
+												<input type="hidden" name="callFor" value="addContact">
+												<div class="form-group">
+												    <div class="input-group">
+														<div class="input-group-prepend">
+															<span class="input-group-text"><i class="fas fa-user"></i></span>
+														</div>
+													  <input type="text" name="firstName" class="form-control" id="firstName" aria-describedby="firstName" placeholder = "Enter your first name here"
+													  th:value="${contact.firstName}" th:classappend="${#fields.hasErrors('firstName')?'is-invalid':''}" novalidate>							     
+													    <!--<p th:each="e : ${#fields.errors('firstName')}" th:text="${e}" class="text-danger"></p>-->
+													    <div th:each="e : ${#fields.errors('firstName')}" th:text="${e}" id="validationServer03Feedback" class="invalid-feedback">
+													    </div>
+												 	</div>
+												 </div>
+												 <div class="form-group">
+												    <!-- <label for="lastName">Last Name</label> -->
+												    <div class="input-group">
+													  <div class="input-group-prepend">
+													   <span class="input-group-text"><i class="fas fa-plus"></i></i></span>
+													  </div>
+													    <input type="text" name="lastName" class="form-control" id="lastName" aria-describedby="emailHelp" placeholder = "your last name"
+													     th:value="${contact.lastName}" th:classappend="${#fields.hasErrors('lastName')?'is-invalid':''}" novalidate>
+													    <!--<p th:each="e : ${#fields.errors('lastName')}" th:text="${e}" class="text-danger"></p>-->
+													    <div th:each="e : ${#fields.errors('lastName')}" th:text="${e}" id="validationServer03Feedback" class="invalid-feedback">
+													    </div>
+													  </div>
+												 </div>
+												 <div class="form-group">
+												    <!-- <label for="email">Email</label> -->
+												    <div class="input-group">
+													  <div class="input-group-prepend">
+													   <span class="input-group-text"><i class="fas fa-at"></i></span>
+													  </div>
+													    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder = "example@gmail.com"
+													     th:value="${contact.email}" th:classappend="${#fields.hasErrors('email')?'is-invalid':''}" novalidate>
+													    <!--<p th:each="e : ${#fields.errors('email')}" th:text="${e}" class="text-danger"></p>-->
+													    <div th:each="e : ${#fields.errors('email')}" th:text="${e}" id="validationServer03Feedback" class="invalid-feedback">
+													    </div>
+													 </div>
+												 </div>
+												 <div class="form-group">
+												    <!-- <label for="password">Password</label> -->
+												    <div class="input-group">
+													  <div class="input-group-prepend">
+													   <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+													  </div>
+													    <input type="text" name="workDetail" class="form-control" id="workDetail" th:value="${contact.workDetail}" aria-describedby="workDetail" novalidate placeholder="work detail here">
+													    <!--<p th:each="e : ${#fields.errors('password')}" th:text="${e}" class="text-danger"></p>-->
+													    <!-- <div th:each="e : ${#fields.errors('password')}" th:text="${e}" id="validationServer03Feedback" class="invalid-feedback"></div>-->
+													  </div>
+												 </div>
+												 <div class="form-group">
+												    <!-- <label for="confirmPassword">Confirm Password</label> -->
+												    <div class="input-group">
+													  <div class="input-group-prepend">
+													   <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+													  </div>
+												    	<input type="number" name="contactNo" class="form-control" id="contactNo" aria-describedby="contactNo" 
+												    	th:value="${contact.contactNo}" th:classappend="${#fields.hasErrors('contactNo')?'is-invalid':''}" novalidate placeholder="Contact no. here">
+												    	<div th:each="e : ${#fields.errors('contactNo')}" th:text="${e}" id="validationServer03Feedback" class="invalid-feedback"></div>
+												    </div>
+												 </div>
+												 <div class="form-group">
+												    <!-- <label for="description">About</label> -->
+												    <textarea rows="8" name="description" class="from-control" id="mytextarea" placeholder="Pleasse enter description here" th:field="${contact.description}" novalidate></textarea>
+												 </div>
+												 <div class="form-group">
+												    <!-- <label for="exampleFormControlFile1">Example file input</label> -->
+												    <input type="file" name="profileImage" class="form-control-file" id="imageUrl">
+												  </div>
+												  <div class="container text-center">
+												  	<!-- <button type="button" class="btn btn-outline-info">Submit</button> -->
+												  	<input type="submit" class="btn btn-outline-info" value="Save Contact" name="submit">
+												  </div>
+											</form>
+										</div>
+									<!-- </div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<script>
+	      tinymce.init({
+	        selector: '#mytextarea'
+	      });
+	      $("#add-contact-link").addClass("active");
+	    </script>
+	</section>
+</body>
+</html>

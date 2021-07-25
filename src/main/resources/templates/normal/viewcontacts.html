@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/userbase::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+</head>
+<body>
+	<section>
+		<div class="container-fluid">
+			<span><i class="fas fa-bars" onclick="toggleSidebar()"></i></span>
+			<div class="card">
+				<div class="card-header" style="padding: 0px !important;">
+					<h1 class="text-center">Your Contacts</h1>
+				</div>
+				<div class="card-body" style="padding: 0px !important;">
+				<div class="mx-3 my-3 search-container">
+					<input type="text" class="form-control" id="searchInput" placeholder="Search your contact here" onkeyup="search();"/>
+					<div class="search-result">
+						<h1>This is your search result</h1>
+					</div>
+				</div>
+				<div class="table-responsive-md">
+					<table class="table table-hover">
+					  <thead class="bg-primary text-white">
+					    <tr>
+					      <th scope="col">ID</th>
+					      <th scope="col">First Name</th>
+					      <th scope="col">Last Name</th>
+					      <th scope="col">Email</th>
+					      <th scope="col">Contact No.</th>
+					      <th scope="col">Action</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr th:if="${totalPages > 0}" th:each="c : ${contacts}">
+					      <th scope="row" th:text="${c.id}"></th>
+					      <td>
+					      	<a href="#" th:attr="onclick=|showProfileImagePopup('${c.imageUrl}')|"><img class="myProfilePicture rounded-circle z-depth-2" src="" th:src="@{'/images/'+${c.imageUrl}}" alt="profile image"/></a>
+					      	<span th:text="${c.firstName}"></span>
+					      </td>
+					      <td th:text="${c.lastName}"></td>
+					      <td><a href="#" th:href="@{'/user/'+${c.id}+'/contact'}"><span th:text="${c.email}"></span></a></td>
+					      <td th:text="${c.contactNo}"></td>
+					      <td>
+					      	<!-- <a href="#" th:href="@{'/user/deletecontact/'+${currentPage}+'/'+${c.id}}"><i class="fas fa-trash icon-danger"></i></a>&nbsp;&nbsp; -->
+					      	<a href="#" th:onclick="|deleteConfirmation(${currentPage},${c.id})|" ><i class="fas fa-trash icon-danger"></i></a>&nbsp;&nbsp;
+					      	<a href="#" th:href="@{'/user/'+${c.id}+'/updatecontact'}"><i class="fas fa-edit icon-edit"></i></a>
+					      </td>
+					    </tr>
+					    <tr th:unless="${totalPages > 0}"><td colspan="6" class="text-center table-secondary">There is no contacts for you!!! Do you want to add contact? <a th:href="@{/user/addcontact}" href="">Click here</a></td></tr>
+					  </tbody>
+					</table>
+					
+					<nav th:if="${totalPages > 1}" aria-label="Page navigation example">
+					  <ul class="pagination">
+					    <li th:if="${currentPage > 0}" class="page-item"><a class="page-link" th:href="@{'/user/viewcontact/'+${currentPage-1}}" href="#"><i class="fas fa-angle-left"></i></a></li>
+					    <li th:classappend="${currentPage == i-1 ? 'active' : ''}" th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/user/viewcontact/'+${i-1}}" href="#"><span th:text="${i}"></span></a></li>
+					    <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/user/viewcontact/'+${currentPage+1}}" href="#"><i class="fas fa-angle-right"></i></a></li>
+					  </ul>
+					</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$("#view-contact-link").addClass("active");
+		</script>
+	</section>
+</body>
+</html>

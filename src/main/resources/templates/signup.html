@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-2 mb-2">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="card">
+						<div class="card-body">
+							<!--<div th:if="${session.message}" th:classappend="${session.message.msgType}" class="alert" role="alert">
+							  <p th:text="${session.message.msgContent}"></p>
+							  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+							</div>-->
+
+							<div th:if="${session.message}"
+								th:classappend="${session.message.msgType}"
+								class="alert alert-dismissible fade show" role="alert">
+								<p th:text="${session.message.msgContent}"></p>
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+							</div>
+
+							<h1 class="text-center">Register here!!</h1>
+							<form th:action="@{/doregister}" method="post"
+								th:object="${user}">
+								<div class="form-group">
+									<label for="firstName">First Name</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="far fa-user"></i></span>
+										</div>
+										<input type="text" name="firstName" class="form-control"
+											id="firstName" aria-describedby="emailHelp"
+											placeholder="your first name" th:value="${user.firstName}"
+											th:classappend="${#fields.hasErrors('firstName')?'is-invalid':''}"
+											novalidate>
+										<!--<p th:each="e : ${#fields.errors('firstName')}" th:text="${e}" class="text-danger"></p>-->
+										<div th:each="e : ${#fields.errors('firstName')}"
+											th:text="${e}" id="validationServer03Feedback"
+											class="invalid-feedback"></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="lastName">Last Name</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="far fa-user"></i></span>
+										</div>
+										<input type="text" name="lastName" class="form-control"
+											id="lastName" aria-describedby="emailHelp"
+											placeholder="your last name" th:value="${user.lastName}"
+											th:classappend="${#fields.hasErrors('lastName')?'is-invalid':''}"
+											novalidate>
+										<!--<p th:each="e : ${#fields.errors('lastName')}" th:text="${e}" class="text-danger"></p>-->
+										<div th:each="e : ${#fields.errors('lastName')}"
+											th:text="${e}" id="validationServer03Feedback"
+											class="invalid-feedback"></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="email">Email</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-at"></i></span>
+										</div>
+										<input type="email" name="email" class="form-control"
+											id="email" aria-describedby="emailHelp"
+											placeholder="example@gmail.com" th:value="${user.email}"
+											th:classappend="${#fields.hasErrors('email')?'is-invalid':''}"
+											novalidate>
+										<!--<p th:each="e : ${#fields.errors('email')}" th:text="${e}" class="text-danger"></p>-->
+										<div th:each="e : ${#fields.errors('email')}" th:text="${e}"
+											id="validationServer03Feedback" class="invalid-feedback">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="password">Password</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-key"></i></span>
+										</div>
+										<input type="password" name="password" class="form-control"
+											id="password" aria-describedby="emailHelp"
+											th:classappend="${#fields.hasErrors('password')?'is-invalid':''}"
+											novalidate placeholder="password">
+										<!--<p th:each="e : ${#fields.errors('password')}" th:text="${e}" class="text-danger"></p>-->
+										<div th:each="e : ${#fields.errors('password')}"
+											th:text="${e}" id="validationServer03Feedback"
+											class="invalid-feedback"></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="confirmPassword">Confirm Password</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-key"></i></span>
+										</div>
+										<input type="password" name="txtConfirmPassword"
+											class="form-control" id="confirmPassword"
+											aria-describedby="emailHelp" novalidate
+											placeholder="Confirm password">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="confirmPassword">About</label>
+									<textarea rows="5" name="about" class="from-control" id="about"
+										placeholder="Enter somthing about yourself"
+										th:field="${user.about}" novalidate></textarea>
+								</div>
+								<div class="form-group form-check">
+									<input type="checkbox" name="agreement"
+										class="form-check-input" id="agreement"
+										aria-describedby="emailHelp"
+										th:classappend="${#fields.hasErrors('agreement')?'is-invalid':''}"
+										novalidate> <label class="form-check-label"
+										for="agreement">Accept terms and condition</label>
+									<div class="invalid-feedback"
+										th:each="e : ${#fields.errors('agreement')}" th:text="${e}">
+									</div>
+								</div>
+								<div class="container text-center">
+									<button type="submit" class="btn bg-primary text-white">Submit</button>
+									<button type="reset" class="btn btn-warning text-white">Reset</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
