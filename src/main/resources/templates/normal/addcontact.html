@@ -30,6 +30,7 @@
 											</div>
 											<form action="" method="post" enctype="multipart/form-data" th:action="@{/user/processcontact}" th:object="${contact}">
 												<input type="hidden" name="callFor" value="addContact">
+												<input type="hidden" name="oldImageName" value=" ">
 												<div class="form-group">
 												    <div class="input-group">
 														<div class="input-group-prepend">

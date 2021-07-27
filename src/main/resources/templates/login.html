@@ -36,6 +36,14 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
+							<div class="alert alert-success alert-dismissible fade show"
+								role="alert" th:if="${param.change}">
+								<p th:text="${param.change}"></p>
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 
 							<form role="form" method="post" th:action="@{/dosignin}"
 								action="#">
@@ -69,20 +77,23 @@
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<div class="form-group">
+										<div class="container-fluid">
 											<div class="row">
-												<div class="col-md-6">
+												<div class="col-sm-6">
 													<div class="checkbox checkbox-primary">
 														<input id="checkbox_remember" type="checkbox"
 															name="remember"> <label for="checkbox_remember">
 															Remember me</label>
 													</div>
 												</div>
-												<div class="col-md-6">
+												<div class="col-sm-6">
 													<div id="registerLink" class="text-right">
 														<a th:href="@{/signup}" class="text-info">Register
 															here</a>
 													</div>
+												</div>
+												<div class="col-md-12 mb-3">
+													<a href="#" th:href="@{/forgetpassword}">Forget Password?</a>
 												</div>
 											</div>
 										</div>

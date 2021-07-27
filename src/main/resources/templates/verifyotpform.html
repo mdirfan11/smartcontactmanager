@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Sign in</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-5">
+			<div class="row h-100">
+				<div class="col-md-6 offset-md-3 my-auto">
+					<div class="card">
+						<div class="card-body">
+							<div class="container" th:if="${session.message}">
+							<div th:classappend="${session.message.msgType}"  class="alert" role="alert">
+							 	<p th:text="${session.message.msgContent}"></p>
+							</div>
+							<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+							</div>
+							<h3>Enter OTP</h3>
+							<form action="#" th:action="@{/forgetpassword/verifyotp}" autocomplete="off" method="post">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+									
+										<input name="otp" class="form-control"  type="text" placeholder="OTP" required/>
+									</div>
+								</div>
+							</div>
+							<div class="container text-center">
+								<!-- <button class="btn btn-warning text-white" type="submit" value="Send OTP">Send OTP</button> -->
+								<input type="submit"  class="btn btn-warning text-white" value="Send OTP"/>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

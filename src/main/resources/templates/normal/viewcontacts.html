@@ -51,7 +51,7 @@
 					    <tr th:unless="${totalPages > 0}"><td colspan="6" class="text-center table-secondary">There is no contacts for you!!! Do you want to add contact? <a th:href="@{/user/addcontact}" href="">Click here</a></td></tr>
 					  </tbody>
 					</table>
-					
+					<div class="card-body">
 					<nav th:if="${totalPages > 1}" aria-label="Page navigation example">
 					  <ul class="pagination">
 					    <li th:if="${currentPage > 0}" class="page-item"><a class="page-link" th:href="@{'/user/viewcontact/'+${currentPage-1}}" href="#"><i class="fas fa-angle-left"></i></a></li>
@@ -59,6 +59,7 @@
 					    <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/user/viewcontact/'+${currentPage+1}}" href="#"><i class="fas fa-angle-right"></i></a></li>
 					  </ul>
 					</nav>
+					</div>
 					</div>
 				</div>
 			</div>
