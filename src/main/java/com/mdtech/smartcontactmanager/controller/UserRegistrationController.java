@@ -36,26 +36,37 @@ public class UserRegistrationController {
 	@PostMapping("/doregister")
 	public String registerUser(@Valid @ModelAttribute("user") UserEntity user, BindingResult bindingResult,
 								@RequestParam(value="agreement", defaultValue="false") boolean agreement,
-								Model model, HttpSession session) {
+								@RequestParam("txtConfirmPassword") String cnfPassword, Model model, HttpSession session) {
+		String returnView = "";
 		try {
+			
 			if (bindingResult.hasErrors()) {
 				System.out.println(bindingResult);
-				return "signup";
+				returnView = "signup";
 			}
-			user.setRole(CommonConstant.NORMAL_USER);
-			user.setActive(CommonConstant.ACTIVE);
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			System.out.println("User after setting role and activeflag : "+user);
-			userRepository.save(user);
-			model.addAttribute("user", new UserEntity());
-			session.setAttribute("message", new HelperMessage("User Registered Successfully!!", "alert-success"));
-			return "signup";
+			
+			if(user.getPassword().equals(cnfPassword)) {
+				user.setRole(CommonConstant.NORMAL_USER);
+				user.setActive(CommonConstant.ACTIVE);
+				user.setPassword(passwordEncoder.encode(user.getPassword()));
+				System.out.println("User after setting role and activeflag : "+user);
+				userRepository.save(user);
+				model.addAttribute("user", new UserEntity());
+				session.setAttribute("message", new HelperMessage("User Registered Successfully!!", "alert-success"));
+				returnView = "signup";
+			} else {
+				model.addAttribute("user", user);
+				session.setAttribute("message", new HelperMessage("Password and Confirm Password must be same", "alert-danger"));
+				returnView = "signup";
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("user", user);
 			session.setAttribute("message", new HelperMessage("Somthing went wrong!!"+e.getMessage(), "alert-danger"));
-			return "signup";
+			returnView = "signup";
 		}
+		return returnView;
 	}
 
 }
